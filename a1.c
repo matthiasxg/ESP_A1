@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------------
 // a1.c
 //
-// Prints my student-ID
+// Gross net tax calculator
 //
 // Group: 9
 //
@@ -13,24 +13,25 @@
 #include <stdbool.h>
 
 // forward declarations
-float getGross();
+double getGross();
 bool getChildren();
-float getSocialContribution(float gross);
-float getIncomeTax(float gross);
+double getSocialContribution(double gross);
+double getIncomeTax(double gross);
 
 //-----------------------------------------------------------------------------
 ///
-/// The main program
-/// Prints my student-ID
+/// The main program:
+/// Calculates the gross net and prints the
+/// result afterwards
 ///
 /// @return always zero
 //
 int main()
 {
-  float gross = getGross();
+  double gross = getGross();
   bool children = getChildren();
-  float social_contribution = getSocialContribution(gross);
-  float income_tax = getIncomeTax(gross - social_contribution);
+  double social_contribution = getSocialContribution(gross);
+  double income_tax = getIncomeTax(gross - social_contribution);
 
   if (income_tax >= 100.0 && children)
   {
@@ -50,21 +51,21 @@ int main()
 
 //-----------------------------------------------------------------------------
 ///
-/// Gets the gross from the console
+/// Reads the gross from the console
 ///
-/// @return user input: gross
+/// @return user input: gross   
 //
-float getGross()
+double getGross()
 {
-  float gross = 0;
+  double gross = 0.0;
   printf("Ihr monatliches Bruttoeinkommen: ");
-  scanf("%f", &gross);
+  scanf("%lf", &gross);
 
-  while (gross <= 0 || gross > 5000000)
+  while (gross <= 0.0 || gross > 5000000.0)
   {
     printf("Invalide Eingabe!\n");
     printf("Ihr monatliches Bruttoeinkommen: ");
-    scanf("%f", &gross);
+    scanf("%lf", &gross);
   }
 
   return gross;
@@ -112,25 +113,30 @@ bool getChildren()
 ///
 /// @return calculated social contribution
 //
-float getSocialContribution(float gross)
+double getSocialContribution(double gross)
 {
-  float social_contribution = 0;
+  double social_contribution = 0;
+  unsigned short contribution_rate = 0;
+
   if (gross <= 5370)
   {
-    unsigned short contribution_rate = 0;
-    if (461 <= gross && gross <= 1733)
+    if (gross <= 460)
+    {
+      contribution_rate = 0;
+    }
+    else if (gross <= 1733)
     {
       contribution_rate = 15;
     }
-    else if (1734 <= gross && gross <= 1891)
+    else if (gross <= 1891)
     {
       contribution_rate = 16;
     }
-    else if (1892 <= gross && gross <= 2049)
+    else if (gross <= 2049)
     {
       contribution_rate = 17;
     }
-    else if (2050 <= gross && gross <= 5370)
+    else if (gross <= 5370)
     {
       contribution_rate = 18;
     }
@@ -151,9 +157,9 @@ float getSocialContribution(float gross)
 ///
 /// @return calculated income tax
 //
-float getIncomeTax(float gross)
+double getIncomeTax(double gross)
 {
-  float income_tax = 0.0;
+  double income_tax = 0.0;
   if (gross > 1000.0)
   {
     income_tax += 1000.0 * (0 / 100.0);
