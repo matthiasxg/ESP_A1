@@ -13,7 +13,7 @@
 #include <stdbool.h>
 
 // forward declarations
-double getGross();
+int getGross();
 bool getChildren();
 double getSocialContribution(double gross);
 double getIncomeTax(double gross);
@@ -28,7 +28,7 @@ double getIncomeTax(double gross);
 //
 int main()
 {
-  double gross = getGross();
+  int gross = getGross();
   bool children = getChildren();
   double social_contribution = getSocialContribution(gross);
   double income_tax = getIncomeTax(gross - social_contribution);
@@ -41,7 +41,7 @@ int main()
     income_tax = 0.0;
   }
 
-  printf("Brutto:\t\t%12.2f\n", gross);
+  printf("Brutto:\t\t%12.2f\n", (double) gross);
   printf("SV:\t\t%12.2f\n", social_contribution * -1.0);
   printf("LSt:\t\t%12.2f\n", income_tax * -1.0);
   printf("Netto:\t\t%12.2f\n", gross - social_contribution - income_tax);
@@ -55,17 +55,17 @@ int main()
 ///
 /// @return user input: gross   
 //
-double getGross()
+int getGross()
 {
-  double gross = 0.0;
+  int gross = 0.0;
   printf("Ihr monatliches Bruttoeinkommen: ");
-  scanf("%lf", &gross);
+  scanf("%d", &gross);
 
-  while (gross <= 0.0 || gross > 5000000.0)
+  while (gross <= 0 || gross > 5000000)
   {
     printf("Invalide Eingabe!\n");
     printf("Ihr monatliches Bruttoeinkommen: ");
-    scanf("%lf", &gross);
+    scanf("%d", &gross);
   }
 
   return gross;
